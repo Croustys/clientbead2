@@ -8,6 +8,8 @@ import "./index.css";
 import App from "./App.jsx";
 import Register from "@components/Auth/Register";
 import Login from "@components/Auth/Login";
+import Logout from "@components/Auth/Logout";
+import Profile from "@components/Auth/Profile";
 
 const routes = [
   {
@@ -21,6 +23,14 @@ const routes = [
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/logout",
+    element: <Logout />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
   },
 ];
 
