@@ -1,14 +1,17 @@
 import { memo } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Authenticated from "./Authenticated";
+import Unauthenticated from "./Unauthenticated";
 
 const Navbar = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const userRole = useSelector((state) => state.auth.userRole);
+  const role = useSelector((state) => state.auth.userRole);
 
   return (
     <nav>
-      <ul>
+      {isAuthenticated ? <Authenticated role={role} /> : <Unauthenticated />}
+      {/* <ul>
         <li>
           <Link to="/">Jobhunter</Link>
         </li>
@@ -34,7 +37,7 @@ const Navbar = () => {
             {userRole === "employer" && <li>Álláshirdetés hozzáadása</li>}
           </>
         )}
-      </ul>
+      </ul> */}
     </nav>
   );
 };
