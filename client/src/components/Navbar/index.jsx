@@ -1,40 +1,41 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const userRole = useSelector((state) => state.auth.userRole);
 
   return (
-    <div>
+    <nav>
       <ul>
         <li>
-          <a href="/">Jobhunter</a>
+          <Link to="/">Jobhunter</Link>
         </li>
         <li>Főoldal</li>
         {!isAuthenticated && (
           <>
             <li>
-              <a href="/register">Regisztráció</a>
+              <Link to="/register">Regisztráció </Link>
             </li>
             <li>
-              <a href="/login">Bejelentkezés</a>
+              <Link to="/login">Bejelentkezés</Link>
             </li>
           </>
         )}
         {isAuthenticated && (
           <>
             <li>
-              <a href="/profile">Profilom</a>
+              <Link to="/profile">Profilom</Link>
             </li>
             <li>
-              <a href="/logout">Kijelentkezés</a>
+              <Link to="/logout">Kijelentkezés</Link>
             </li>
             {userRole === "employer" && <li>Álláshirdetés hozzáadása</li>}
           </>
         )}
       </ul>
-    </div>
+    </nav>
   );
 };
 
