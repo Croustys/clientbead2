@@ -6,12 +6,14 @@ const authSlice = createSlice({
     accessToken: null,
     isAuthenticated: false,
     userRole: null,
+    userId: null,
   },
   reducers: {
     setAccessToken: (state, action) => {
       state.accessToken = action.payload.accessToken;
       state.isAuthenticated = !!action.payload.accessToken;
       state.userRole = action.payload.userRole;
+      state.userId = action.payload.userId
     },
     logout: (state) => {
       state.accessToken = null;

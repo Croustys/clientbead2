@@ -8,6 +8,8 @@ import Login from "@components/Auth/Login";
 import Logout from "@components/Auth/Logout";
 import Profile from "@components/Auth/Profile";
 import Layout from "@components/Layout";
+import Jobs from "@components/Jobs";
+import Job from "@components/Jobs/Job";
 
 const CustomRouter = () => {
   return (
@@ -19,6 +21,8 @@ const CustomRouter = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/logout" element={<Logout />} />
+          <Route path="/jobs" element={<Jobs />} />
+          <Route path="/job/:id" element={<Job />} />
         </Route>
       </Routes>
     </Router>

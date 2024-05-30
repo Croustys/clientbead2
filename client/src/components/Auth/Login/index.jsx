@@ -35,8 +35,9 @@ const Login = () => {
 
       const accessToken = resp.accessToken;
       const userRole = resp.user.role;
+      const userId = resp.user.id;
 
-      dispatch(setAccessToken({ accessToken, userRole }));
+      dispatch(setAccessToken({ accessToken, userRole, userId }));
       navigator("/");
     } catch (error) {
       console.error("Login failed:", error);
