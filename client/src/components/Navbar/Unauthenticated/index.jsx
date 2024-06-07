@@ -5,7 +5,7 @@ const Unauthenticated = () => {
   return (
     <ul>
       <li>
-        <Link to="/feed">Főoldal</Link>
+        <Link to="/jobs">Főoldal</Link>
       </li>
       <li>
         <Link to="/register">Regisztráció</Link>

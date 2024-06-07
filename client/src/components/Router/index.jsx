@@ -22,7 +22,7 @@ const CustomRouter = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/jobs" element={<Jobs />} />
-          <Route path="/job/:id" element={<Job />} />
+          <Route path="/jobs/:id" element={<Job />} />
         </Route>
       </Routes>
     </Router>

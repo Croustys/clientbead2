@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useGetJobByIdQuery } from "@lib/api";
+import { useGetJobByIdQuery, useApplyForJobMutation } from "@lib/api";
+import Success from "@components/Success";
 
 const Job = () => {
   const { id } = useParams();
   const { data: jobData, error, isLoading } = useGetJobByIdQuery(id);
+  const [applyForJob, { isError }] = useApplyForJobMutation();
+  const [isSuccess, setIsSuccess] = useState(false);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -13,6 +16,17 @@ const Job = () => {
   if (error) {
     return <div>Error fetching job data: {error.message}</div>;
   }
+
+  const handleJobApplication = async () => {
+    try {
+      await applyForJob({
+        jobId: parseInt(id),
+      }).unwrap();
+      setIsSuccess(true);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div>
@@ -26,6 +40,10 @@ const Job = () => {
         Salary: {jobData.salaryFrom} - {jobData.salaryTo}
       </p>
       <p>Home Office: {jobData.homeOffice ? "Yes" : "No"}</p>
+      <button onClick={() => handleJobApplication()}>Apply for job</button>
+      {isSuccess && !isError && (
+        <Success message="Sikeresen jelentkeztél a munkára!" />
+      )}
     </div>
   );
 };

@@ -5,7 +5,7 @@ const Jobseeker = () => {
   return (
     <ul>
       <li>
-        <Link to="/feed">Főoldal</Link>
+        <Link to="/jobs">Főoldal</Link>
       </li>
       <li>
         <Link to="/profile">Profilom</Link>

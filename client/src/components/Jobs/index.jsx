@@ -1,9 +1,18 @@
 import React, { memo, useState } from "react";
 import { useGetJobsQuery } from "@lib/api";
+import { Link } from "react-router-dom";
 
 const Jobs = () => {
-  const { data: jobsData, error, isLoading } = useGetJobsQuery();
   const [searchTerm, setSearchTerm] = useState("");
+  const [userId, setUserId] = useState("");
+  const [salaryFrom, setSalaryFrom] = useState("");
+  const [company, setCompany] = useState("");
+
+  const {
+    data: jobsData,
+    error,
+    isLoading,
+  } = useGetJobsQuery({ userId, salaryFrom, company });
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -29,6 +38,35 @@ const Jobs = () => {
         />
         <button onClick={() => setSearchTerm("")}>Törlés</button>
       </div>
+      <div>
+        <input
+          type="text"
+          placeholder="Felhasználó ID"
+          value={userId}
+          onChange={(e) => setUserId(e.target.value)}
+        />
+        <input
+          type="number"
+          placeholder="Minimális fizetés"
+          value={salaryFrom}
+          onChange={(e) => setSalaryFrom(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Cég"
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
+        />
+        <button
+          onClick={() => {
+            setUserId("");
+            setSalaryFrom("");
+            setCompany("");
+          }}
+        >
+          Törlés
+        </button>
+      </div>
       <table>
         <thead>
           <tr>
@@ -39,8 +77,12 @@ const Jobs = () => {
         <tbody>
           {filteredJobs.map((job) => (
             <tr key={job.id}>
-              <td>{job.position}</td>
-              <td>{job.description}</td>
+              <td>
+                <Link to={`/jobs/${job.id}`}>
+                  {job.position}
+                  {job.description}
+                </Link>
+              </td>
             </tr>
           ))}
         </tbody>

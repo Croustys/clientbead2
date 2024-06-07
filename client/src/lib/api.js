@@ -19,7 +19,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
   if (result.error && result.error.status === 401) {
     // Handle 401 errors if needed
-    console.error(result)
+    console.error(result);
   }
 
   return result;
@@ -37,10 +37,17 @@ export const api = createApi({
       }),
     }),
     loginUser: builder.mutation({
-      query: ({ email, password, strategy }) => ({
+      query: ({ email, password }) => ({
         url: '/authentication',
         method: 'POST',
-        body: { email, password, strategy },
+        body: { email, password, strategy: 'local' },
+      }),
+    }),
+    applyForJob: builder.mutation({
+      query: ({ jobId }) => ({
+        url: '/applicants',
+        method: 'POST',
+        body: { jobId },
       }),
     }),
     getUserById: builder.query({
@@ -55,7 +62,31 @@ export const api = createApi({
     getJobById: builder.query({
       query: (id) => `/jobs/${id}`,
     }),
+    addExperiences: builder.mutation({
+      query: (experiences) => ({
+        url: '/experiences',
+        method: 'POST',
+        body: experiences,
+      }),
+    }),
+    updateExperience: builder.mutation({
+      query: ({ id, ...experience }) => ({
+        url: `/experiences/${id}`,
+        method: 'PATCH',
+        body: experience,
+      }),
+    }),
   }),
 });
 
-export const { useRegisterUserMutation, useLoginUserMutation, useGetUserByIdQuery, useGetExperiencesQuery, useGetJobsQuery, useGetJobByIdQuery } = api;
+export const {
+  useRegisterUserMutation,
+  useLoginUserMutation,
+  useGetUserByIdQuery,
+  useGetExperiencesQuery,
+  useGetJobsQuery,
+  useGetJobByIdQuery,
+  useApplyForJobMutation,
+  useAddExperiencesMutation,
+  useUpdateExperienceMutation,
+} = api;
