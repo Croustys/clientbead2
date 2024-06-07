@@ -76,6 +76,13 @@ export const api = createApi({
         body: experience,
       }),
     }),
+    createJob: builder.mutation({
+      query: (job) => ({
+        url: '/jobs',
+        method: 'POST',
+        body: job,
+      }),
+    }),
   }),
 });
 
@@ -89,4 +96,5 @@ export const {
   useApplyForJobMutation,
   useAddExperiencesMutation,
   useUpdateExperienceMutation,
+  useCreateJobMutation
 } = api;
