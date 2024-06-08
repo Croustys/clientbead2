@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_URL } from '@lib/constants';
 
-const AuthorizedBaseQuery = async (args, api, extraOptions) => {
+export const AuthorizedBaseQuery = async (args, api, extraOptions) => {
   const { auth } = api.getState();
   const token = auth.accessToken;
 
@@ -54,9 +54,6 @@ export const api = createApi({
     }),
     getExperiences: builder.query({
       query: () => `/experiences`,
-    }),
-    getJobs: builder.query({
-      query: () => `/jobs`,
     }),
     getJobById: builder.query({
       query: (id) => `/jobs/${id}`,

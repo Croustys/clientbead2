@@ -61,9 +61,12 @@ Bejelentkezés nélkül a vendég felhasználók az alábbi oldalakat tekintheti
 - Bejelentkezés oldala
   - E-mail és jelszó párossal autentikálhatja magát a felhasználó
 - Regisztráció oldala
+
   - Kiválasztható a profil típusa (Munkáltató / Munkavállaló)
   - Munkavállaló típus esetén megadhatóak a korábbi munkatapasztalatok:
+
     - Több-soros szöveges beviteli mezőben, amiben soronként tördelve meg tudjuk adni a munkahelyeinket és a hozzá tartozó pozíciót, illetve a tól-ig évszámot.
+
     ```json
     Halo Haven;Front-end fejlesztő;2021-2022
     Dunder Mifflin;Full-stack fejlesztő;2022-
@@ -286,4 +289,4 @@ Az elkészült program beadása a Canvasen történik, és két dolgot kell ide 
 
 - [ ] Plusz feladat: az álláshirdetések listája infinite-scrollinggal jelenik meg (+2pt)
 - [ ] Plusz feladat: az álláshirdetések létrehozásánál a munkáltató egy range-sliderrel tudja megadni a fizetés minimum és maximum értékét (+2pt)
-- [ ] Plusz feladat: Modalban jelenik meg az oldal valamely része (vagy az álláshirdetés leírása, vagy a az álláshirdetésre jelentkező emberek listája, akár a profiljai) (+1pt)
+- [x] Plusz feladat: Modalban jelenik meg az oldal valamely része (vagy az álláshirdetés leírása, vagy a az álláshirdetésre jelentkező emberek listája, akár a profiljai) (+1pt)

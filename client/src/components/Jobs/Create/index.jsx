@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useCreateJobMutation } from "@lib/api";
 import CompanyAuthWrapper from "@components/Auth/Authenticated/CompanyAuthWrapper";
 import { Input } from "@/components/ui/input";
@@ -12,10 +12,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import Success from "@/components/Success";
+
+const initialSuccess = { isSuccess: false, message: "" };
 
 const CreateJobForm = () => {
   const [createJob, { isLoading, isError }] = useCreateJobMutation();
 
+  const formRef = useRef(null);
   const [companyName, setCompanyName] = useState("");
   const [positionName, setPositionName] = useState("");
   const [description, setDescription] = useState("");
@@ -24,12 +28,13 @@ const CreateJobForm = () => {
   const [employmentType, setEmploymentType] = useState("full-time");
   const [location, setLocation] = useState("");
   const [isRemote, setIsRemote] = useState(false);
+  const [success, setSuccess] = useState(initialSuccess);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const { data } = await createJob({
+      await createJob({
         company: companyName,
         position: positionName,
         description,
@@ -39,7 +44,11 @@ const CreateJobForm = () => {
         city: location,
         homeOffice: isRemote,
       });
-      console.log("New job created:", data);
+      setSuccess({ isSuccess: true, message: "Successfully created job!" });
+      setTimeout(() => {
+        setSuccess(initialSuccess);
+        formRef.current.reset();
+      }, 3000);
     } catch (error) {
       console.error("Error creating job:", error);
     }
@@ -47,7 +56,7 @@ const CreateJobForm = () => {
 
   return (
     <CompanyAuthWrapper>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} ref={formRef}>
         <div>
           <Label htmlFor="companyName">Company Name</Label>
           <Input
@@ -155,6 +164,7 @@ const CreateJobForm = () => {
         </Button>
         {isError && <p>Failed to create job. Please try again.</p>}
       </form>
+      {success.isSuccess && <Success message={success.message} />}
     </CompanyAuthWrapper>
   );
 };

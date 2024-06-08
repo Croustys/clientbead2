@@ -5,6 +5,7 @@ const initialState = {
   salaryMax: null,
   type: null,
   city: null,
+  homeOffice: null
 };
 
 const filterSlice = createSlice({
@@ -23,9 +24,12 @@ const filterSlice = createSlice({
     setCity(state, action) {
       state.city = action.payload;
     },
+    setHomeOffice(state, action) {
+      state.homeOffice = action.payload
+    }
   },
 });
 
-export const { setSalaryMin, setSalaryMax, setEmploymentType, setCity } = filterSlice.actions;
+export const { setSalaryMin, setSalaryMax, setEmploymentType, setCity, setHomeOffice } = filterSlice.actions;
 
 export default filterSlice.reducer;

@@ -95,9 +95,6 @@ const CompanyProfile = () => {
             </div>
             <div>
               <Button onClick={() => handleViewClick(job.id)}>View</Button>
-              <Button onClick={() => navigate(`/jobs/edit/${job.id}`)}>
-                Edit
-              </Button>
               <Button onClick={() => handleDeleteClick(job.id)}>Delete</Button>
             </div>
           </li>

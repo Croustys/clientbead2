@@ -72,7 +72,7 @@ const Login = () => {
           required
         />
       </div>
-      <Button type="submit" disabled={isLoading}>
+      <Button type="submit" disabled={isLoading} className="mt-5">
         Login
       </Button>
       {isError && <p>Login failed. Please try again.</p>}

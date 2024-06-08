@@ -16,7 +16,7 @@ const Success = ({ message }) => {
   }
 
   return (
-    <div>
+    <div className="p-5 bg-lime-500 text-black mt-5">
       <h1>{message}</h1>
     </div>
   );

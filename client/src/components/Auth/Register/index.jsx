@@ -164,6 +164,7 @@ const Register = () => {
       <Button
         type="submit"
         disabled={isRegistering || isLoggingIn || isAddingExperiences}
+        className="mt-5"
       >
         Register
       </Button>

@@ -1,5 +1,4 @@
-import { memo, useState } from "react";
-import { useGetJobsQuery } from "@lib/api";
+import { memo, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -7,24 +6,38 @@ import { Button } from "@/components/ui/button";
 import { getEmploymentType, formatSalary } from "@lib/utils";
 import { useSelector } from "react-redux";
 import Filter from "./Filter";
+import { API_URL } from "@lib/constants";
 
 const Jobs = () => {
   const [search, setSearch] = useState("");
-  const { data: jobsData, error, isLoading } = useGetJobsQuery();
   const filter = useSelector((state) => state.filter);
+  const [jobs, setJobs] = useState([]);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error fetching jobs data: {error.message}</div>;
-  }
-
-  const filteredJobs = jobsData.data;
+  useEffect(() => {
+    handleSearch();
+  }, []);
 
   const handleSearch = async () => {
-    console.log(filter);
+    const { salaryMin, salaryMax, type, city, homeOffice } = filter;
+    const queryParams = new URLSearchParams();
+
+    if (salaryMin) queryParams.append("salaryFrom[$gt]", salaryMin);
+    if (salaryMax) queryParams.append("salaryTo[$lt]", salaryMax);
+    if (city) queryParams.append("city", city);
+    if (type) queryParams.append("type", type);
+    if (homeOffice) queryParams.append("homeOffice", homeOffice);
+    if (search) queryParams.append("position", search);
+
+    const queryString = queryParams.toString();
+    const url = `${API_URL}/jobs${queryString ? `?${queryString}` : ""}`;
+
+    try {
+      const resp = await fetch(url);
+      const body = await resp.json();
+      setJobs(body.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -53,7 +66,7 @@ const Jobs = () => {
           <h2>COMPENSATION</h2>
         </div>
         <hr />
-        {filteredJobs.map((job) => (
+        {jobs?.map((job) => (
           <div key={job.id}>
             <Link to={`/jobs/${job.id}`}>
               <div className="p-5 hover:bg-slate-100 hover:text-black">

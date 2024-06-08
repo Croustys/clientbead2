@@ -8,6 +8,7 @@ import {
 } from "@lib/api";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@components/ui/button";
+import { Input } from "@components/ui/input";
 
 const JobseekerProfile = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const JobseekerProfile = () => {
     data: experiencesData,
     error: experiencesError,
     isLoading: isExperiencesLoading,
-  } = useGetExperiencesQuery();
+  } = useGetExperiencesQuery(undefined, { refetchOnMountOrArgChange: 2 });
   const [updateExperience] = useUpdateExperienceMutation();
   const [editingExperience, setEditingExperience] = useState(null);
   const [experienceForm, setExperienceForm] = useState({
@@ -97,21 +98,21 @@ const JobseekerProfile = () => {
           <li key={exp.id} className="mb-4">
             {editingExperience === exp.id ? (
               <div className="p-4 bg-slate-100">
-                <input
+                <Input
                   type="text"
                   name="company"
                   value={experienceForm.company}
                   onChange={handleInputChange}
                   className="mb-2"
                 />
-                <input
+                <Input
                   type="text"
                   name="title"
                   value={experienceForm.title}
                   onChange={handleInputChange}
                   className="mb-2"
                 />
-                <input
+                <Input
                   type="text"
                   name="interval"
                   value={experienceForm.interval}
