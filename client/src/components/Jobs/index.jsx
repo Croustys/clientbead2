@@ -5,17 +5,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { getEmploymentType, formatSalary } from "@lib/utils";
+import { useSelector } from "react-redux";
+import Filter from "./Filter";
 
 const Jobs = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [salaryFrom, setSalaryFrom] = useState("");
-  const [company, setCompany] = useState("");
-
-  const {
-    data: jobsData,
-    error,
-    isLoading,
-  } = useGetJobsQuery({ salaryFrom, company });
+  const [search, setSearch] = useState("");
+  const { data: jobsData, error, isLoading } = useGetJobsQuery();
+  const filter = useSelector((state) => state.filter);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -25,51 +21,36 @@ const Jobs = () => {
     return <div>Error fetching jobs data: {error.message}</div>;
   }
 
-  const filteredJobs = jobsData.data.filter((job) =>
-    job.position.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredJobs = jobsData.data;
+
+  const handleSearch = async () => {
+    console.log(filter);
+  };
 
   return (
     <>
-      <h1>Böngéssz az állások között:</h1>
+      <h1>Browse jobs:</h1>
       <div>
-        <Label htmlFor="search">Search</Label>
-        <Input
-          type="text"
-          id="search"
-          name="search"
-          placeholder="Search..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <Button onClick={() => setSearchTerm("")}>Törlés</Button>
-      </div>
-      <div>
-        <Input
-          type="number"
-          placeholder="Minimális fizetés"
-          value={salaryFrom}
-          onChange={(e) => setSalaryFrom(e.target.value)}
-        />
-        <Input
-          type="text"
-          placeholder="Cég"
-          value={company}
-          onChange={(e) => setCompany(e.target.value)}
-        />
-        <Button
-          onClick={() => {
-            setSalaryFrom("");
-            setCompany("");
-          }}
-        >
-          Törlés
-        </Button>
+        <div>
+          <Label htmlFor="search">Search</Label>
+          <Input
+            type="text"
+            id="search"
+            name="search"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+        <div className="flex justify-end pt-2">
+          <div className="pr-5">
+            <Filter />
+          </div>
+          <Button onClick={handleSearch}>Search</Button>
+        </div>
       </div>
       <div>
         <div className="flex justify-between p-5">
-          <h2>ÁLLÁS NEVE</h2>
-          <h2>KOMPENZÁCIÓ</h2>
+          <h2>JOB NAME</h2>
+          <h2>COMPENSATION</h2>
         </div>
         <hr />
         {filteredJobs.map((job) => (

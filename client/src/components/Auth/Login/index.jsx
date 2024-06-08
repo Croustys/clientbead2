@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useLoginUserMutation } from "@lib/api";
 import { useDispatch } from "react-redux";
-import { setAccessToken } from "@store/auth/authSlice";
+import { setAccessToken } from "@/store/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

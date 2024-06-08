@@ -5,16 +5,16 @@ const Company = () => {
   return (
     <ul>
       <li>
-        <Link to="/jobs">Főoldal</Link>
+        <Link to="/jobs">Home</Link>
       </li>
       <li>
-        <Link to="/profile">Profilom</Link>
+        <Link to="/profile">Profile</Link>
       </li>
       <li>
-        <Link to="/jobs/create">Álláshirdetés hozzáadása</Link>
+        <Link to="/jobs/create">Create Job</Link>
       </li>
       <li>
-        <Link to="/logout">Kijelentkezés</Link>
+        <Link to="/logout">Log out</Link>
       </li>
     </ul>
   );

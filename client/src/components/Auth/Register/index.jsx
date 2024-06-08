@@ -4,7 +4,7 @@ import {
   useLoginUserMutation,
   useAddExperiencesMutation,
 } from "@lib/api";
-import { setAccessToken } from "@store/auth/authSlice";
+import { setAccessToken } from "@/store/slices/authSlice";
 import { useDispatch } from "react-redux";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

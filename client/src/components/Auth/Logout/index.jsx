@@ -1,6 +1,6 @@
 import { memo, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { logout } from "@store/auth/authSlice";
+import { logout } from "@/store/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 
 const Logout = () => {

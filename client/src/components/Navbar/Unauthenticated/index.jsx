@@ -5,13 +5,13 @@ const Unauthenticated = () => {
   return (
     <ul>
       <li>
-        <Link to="/jobs">Főoldal</Link>
+        <Link to="/jobs">Home</Link>
       </li>
       <li>
-        <Link to="/register">Regisztráció</Link>
+        <Link to="/register">Registration</Link>
       </li>
       <li>
-        <Link to="/login">Bejelentkezés</Link>
+        <Link to="/login">Sign in</Link>
       </li>
     </ul>
   );
