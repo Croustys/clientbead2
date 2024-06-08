@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { getEmploymentType, formatSalary } from "@lib/utils";
 
 const Jobs = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -73,26 +74,32 @@ const Jobs = () => {
           Törlés
         </Button>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>ÁLLÁS NEVE</th>
-            <th>LEÍRÁS</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredJobs.map((job) => (
-            <tr key={job.id}>
-              <td>
-                <Link to={`/jobs/${job.id}`}>
-                  {job.position}
-                  {job.description}
-                </Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div>
+        <div className="flex justify-between p-5">
+          <h2>ÁLLÁS NEVE</h2>
+          <h2>KOMPENZÁCIÓ</h2>
+        </div>
+        <hr />
+        {filteredJobs.map((job) => (
+          <div key={job.id}>
+            <Link to={`/jobs/${job.id}`}>
+              <div className="p-5 hover:bg-slate-100 hover:text-black">
+                <div className="flex justify-between">
+                  <div>
+                    <p>{job.position}</p>
+                    <p className="text-gray-400">{job.city}</p>
+                  </div>
+                  <div className="text-right">
+                    <p>{formatSalary(job.salaryFrom, job.salaryTo)}</p>
+                    <p>{getEmploymentType(job.type)}</p>
+                  </div>
+                </div>
+              </div>
+            </Link>
+            <hr />
+          </div>
+        ))}
+      </div>
     </>
   );
 };

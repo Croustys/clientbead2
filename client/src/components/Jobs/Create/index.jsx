@@ -1,6 +1,17 @@
 import React, { useState } from "react";
 import { useCreateJobMutation } from "@lib/api";
 import CompanyAuthWrapper from "@components/Auth/Authenticated/CompanyAuthWrapper";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 
 const CreateJobForm = () => {
   const [createJob, { isLoading, isError }] = useCreateJobMutation();
@@ -31,7 +42,6 @@ const CreateJobForm = () => {
       console.log("New job created:", data);
     } catch (error) {
       console.error("Error creating job:", error);
-      // Hiba kezelése, pl. felhasználó értesítése
     }
   };
 
@@ -39,72 +49,111 @@ const CreateJobForm = () => {
     <CompanyAuthWrapper>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Company Name:</label>
-          <input
+          <Label htmlFor="companyName">Company Name</Label>
+          <Input
             type="text"
+            name="companyName"
+            id="companyName"
+            placeholder="Company Name"
             value={companyName}
             onChange={(e) => setCompanyName(e.target.value)}
+            required
           />
         </div>
         <div>
-          <label>Position Name:</label>
-          <input
+          <Label htmlFor="positionName">Position Name</Label>
+          <Input
             type="text"
+            name="positionName"
+            id="positionName"
+            placeholder="Position Name"
             value={positionName}
             onChange={(e) => setPositionName(e.target.value)}
+            required
           />
         </div>
         <div>
-          <label>Description:</label>
-          <textarea
+          <Label htmlFor="description">Description</Label>
+          <Textarea
+            name="description"
+            id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            placeholder="Job Description"
+            rows="4"
+            required
           />
         </div>
         <div>
-          <label>Salary Range (from):</label>
-          <input
+          <Label htmlFor="salaryFrom">Salary Range (from)</Label>
+          <Input
             type="number"
+            name="salaryFrom"
+            id="salaryFrom"
+            placeholder="Salary From"
             value={salaryFrom}
             onChange={(e) => setSalaryFrom(e.target.value)}
+            required
           />
         </div>
         <div>
-          <label>Salary Range (to):</label>
-          <input
+          <Label htmlFor="salaryTo">Salary Range (to)</Label>
+          <Input
             type="number"
+            name="salaryTo"
+            id="salaryTo"
+            placeholder="Salary To"
             value={salaryTo}
             onChange={(e) => setSalaryTo(e.target.value)}
+            required
           />
         </div>
         <div>
-          <label>Employment Type:</label>
-          <select
-            value={employmentType}
-            onChange={(e) => setEmploymentType(e.target.value)}
+          <Label htmlFor="employmentType">Employment Type</Label>
+          <Select
+            defaultValue={employmentType}
+            onValueChange={(t) => setEmploymentType(t)}
           >
-            <option value="Full-time">Full-time</option>
-            <option value="Part-time">Part-time</option>
-            <option value="Internship">Internship</option>
-          </select>
+            <SelectTrigger
+              className="w-[180px]"
+              id="employmentType"
+              name="employmentType"
+            >
+              <SelectValue placeholder="Select Employment Type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="full-time">Full-time</SelectItem>
+              <SelectItem value="part-time">Part-time</SelectItem>
+              <SelectItem value="internship">Internship</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
         <div>
-          <label>Location:</label>
-          <input
+          <Label htmlFor="location">Location</Label>
+          <Input
             type="text"
+            name="location"
+            id="location"
+            placeholder="Location"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
+            required
           />
         </div>
         <div>
-          <label>Remote Work Option:</label>
-          <input
+          <Label htmlFor="isRemote">Remote Work Option</Label>
+          <Input
             type="checkbox"
+            name="isRemote"
+            id="isRemote"
             checked={isRemote}
             onChange={(e) => setIsRemote(e.target.checked)}
           />
         </div>
-        <button type="submit">Submit</button>
+        <Button type="submit" disabled={isLoading}>
+          Submit
+        </Button>
+        {isError && <p>Failed to create job. Please try again.</p>}
       </form>
     </CompanyAuthWrapper>
   );
