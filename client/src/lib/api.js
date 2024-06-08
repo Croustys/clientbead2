@@ -91,6 +91,13 @@ export const api = createApi({
     getApplicantsByJobId: builder.query({
       query: (jobId) => `/applicants?jobId=${jobId}`,
     }),
+    updateJob: builder.mutation({
+      query: ({ id, ...jobData }) => ({
+        url: `/jobs/${id}`,
+        method: 'PATCH',
+        body: jobData
+      }),
+    }),
   }),
 });
 
@@ -107,5 +114,6 @@ export const {
   useCreateJobMutation,
   useGetJobsByCompanyQuery,
   useDeleteJobMutation,
-  useGetApplicantsByJobIdQuery
+  useGetApplicantsByJobIdQuery,
+  useUpdateJobMutation
 } = api;

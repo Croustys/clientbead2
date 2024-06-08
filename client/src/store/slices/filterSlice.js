@@ -26,6 +26,9 @@ const filterSlice = createSlice({
     },
     setHomeOffice(state, action) {
       state.homeOffice = action.payload
+    },
+    reset(state) {
+      state = initialState
     }
   },
 });

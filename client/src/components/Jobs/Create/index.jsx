@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 import Success from "@/components/Success";
 
 const initialSuccess = { isSuccess: false, message: "" };
@@ -57,7 +58,7 @@ const CreateJobForm = () => {
   return (
     <CompanyAuthWrapper>
       <form onSubmit={handleSubmit} ref={formRef}>
-        <div>
+        <div className="p-2">
           <Label htmlFor="companyName">Company Name</Label>
           <Input
             type="text"
@@ -69,7 +70,7 @@ const CreateJobForm = () => {
             required
           />
         </div>
-        <div>
+        <div className="p-2">
           <Label htmlFor="positionName">Position Name</Label>
           <Input
             type="text"
@@ -81,7 +82,7 @@ const CreateJobForm = () => {
             required
           />
         </div>
-        <div>
+        <div className="p-2">
           <Label htmlFor="description">Description</Label>
           <Textarea
             name="description"
@@ -93,7 +94,7 @@ const CreateJobForm = () => {
             required
           />
         </div>
-        <div>
+        <div className="p-2">
           <Label htmlFor="salaryFrom">Salary Range (from)</Label>
           <Input
             type="number"
@@ -105,7 +106,7 @@ const CreateJobForm = () => {
             required
           />
         </div>
-        <div>
+        <div className="p-2">
           <Label htmlFor="salaryTo">Salary Range (to)</Label>
           <Input
             type="number"
@@ -117,7 +118,7 @@ const CreateJobForm = () => {
             required
           />
         </div>
-        <div>
+        <div className="p-2">
           <Label htmlFor="employmentType">Employment Type</Label>
           <Select
             defaultValue={employmentType}
@@ -137,7 +138,7 @@ const CreateJobForm = () => {
             </SelectContent>
           </Select>
         </div>
-        <div>
+        <div className="p-2">
           <Label htmlFor="location">Location</Label>
           <Input
             type="text"
@@ -149,17 +150,17 @@ const CreateJobForm = () => {
             required
           />
         </div>
-        <div>
+        <div className="p-2">
           <Label htmlFor="isRemote">Remote Work Option</Label>
-          <Input
-            type="checkbox"
+          <Checkbox
+            id="isRemove"
             name="isRemote"
-            id="isRemote"
+            className="ml-5"
             checked={isRemote}
-            onChange={(e) => setIsRemote(e.target.checked)}
+            onCheckedChange={(e) => setIsRemote(e)}
           />
         </div>
-        <Button type="submit" disabled={isLoading}>
+        <Button type="submit" disabled={isLoading} className="m-2">
           Submit
         </Button>
         {isError && <p>Failed to create job. Please try again.</p>}

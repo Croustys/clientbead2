@@ -9,6 +9,7 @@ import {
 } from "@lib/api";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@components/ui/button";
+import { formatSalary } from "@/lib/utils";
 
 const CompanyProfile = () => {
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ const CompanyProfile = () => {
     isLoading: isApplicantsLoading,
   } = useGetApplicantsByJobIdQuery(selectedJobId, {
     skip: selectedJobId === null,
+    refetchOnMountOrArgChange: 0,
   });
 
   if (isUserLoading || isJobsLoading) {
@@ -55,18 +57,14 @@ const CompanyProfile = () => {
     setSelectedJobId(jobId);
   };
 
-  const handleAddJobClick = () => {
-    navigate("/jobs/create");
-  };
-
   return (
     <div className="flex-col">
       <div className="flex justify-between p-5">
         <div>
-          <h1>Personal Information</h1>
-          <h2>Your details and experiences in one place.</h2>
+          <h1>Company Information</h1>
+          <h2>Your jobs and applicants in one place.</h2>
         </div>
-        <Button onClick={handleAddJobClick}>Add Job</Button>
+        <Button onClick={() => navigate("/jobs/create")}>Add Job</Button>
       </div>
       <hr className="mb-5" />
       <div className="flex justify-between p-5 bg-slate-100">
@@ -81,7 +79,7 @@ const CompanyProfile = () => {
         <p>Status</p>
         <p>{userData.role}</p>
       </div>
-      <h3 className="mt-5 mb-2">Job Listings</h3>
+      <h3 className="mt-5 mb-2">Jobs</h3>
       <ul>
         {jobsData.data.map((job) => (
           <li
@@ -91,13 +89,22 @@ const CompanyProfile = () => {
             <div>
               <strong>{job.position}</strong> at {job.company} ({job.city})
               <p>{job.description}</p>
-              <p>
-                {job.salaryFrom} - {job.salaryTo}
-              </p>
+              <p>{formatSalary(job.salaryFrom, job.salaryTo)}</p>
             </div>
             <div>
               <Button onClick={() => handleViewClick(job.id)}>View</Button>
-              <Button onClick={() => handleDeleteClick(job.id)}>Delete</Button>
+              <Button
+                onClick={() => navigate(`/jobs/${job.id}/edit`)}
+                className="ml-2"
+              >
+                Edit
+              </Button>
+              <Button
+                onClick={() => handleDeleteClick(job.id)}
+                className="ml-2"
+              >
+                Delete
+              </Button>
             </div>
           </li>
         ))}

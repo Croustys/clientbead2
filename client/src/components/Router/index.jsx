@@ -9,8 +9,9 @@ import Logout from "@components/Auth/Logout";
 import Profile from "@components/Auth/Profile";
 import Layout from "@components/Layout";
 import Jobs from "@components/Jobs";
+import CreateJobForm from "@components/Jobs/Create";
 import Job from "@components/Jobs/Job";
-import CreateJobForm from "@components/Jobs/Create/index.jsx";
+import EditJob from "@components/Jobs/Edit";
 
 const CustomRouter = () => {
   return (
@@ -25,6 +26,7 @@ const CustomRouter = () => {
           <Route path="/jobs" element={<Jobs />} />
           <Route path="/jobs/create" element={<CreateJobForm />} />
           <Route path="/jobs/:id" element={<Job />} />
+          <Route path="/jobs/:id/edit" element={<EditJob />} />
         </Route>
       </Routes>
     </Router>

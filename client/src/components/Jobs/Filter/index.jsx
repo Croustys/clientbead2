@@ -27,6 +27,7 @@ import {
   setCity,
   setHomeOffice,
 } from "@store/slices/filterSlice";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const Filter = () => {
   const dispatch = useDispatch();
@@ -47,32 +48,8 @@ const Filter = () => {
     filter.homeOffice,
   ]);
 
-  const handleSalaryMinChange = (e) => {
-    dispatch(setSalaryMin(parseInt(e.target.value)));
-  };
-
-  const handleSalaryMaxChange = (e) => {
-    dispatch(setSalaryMax(parseInt(e.target.value)));
-  };
-
-  const handleTypeChange = (t) => {
-    dispatch(setEmploymentType(t));
-  };
-
-  const handleCityChange = (e) => {
-    dispatch(setCity(e.target.value));
-  };
-
-  const handleHomeOfficeChange = (e) => {
-    dispatch(setHomeOffice(e.target.checked));
-  };
-
   const handleReset = () => {
-    dispatch(setSalaryMin(null));
-    dispatch(setSalaryMax(null));
-    dispatch(setEmploymentType(null));
-    dispatch(setCity(null));
-    dispatch(setHomeOffice(null));
+    dispatch(reset());
   };
 
   return (
@@ -98,7 +75,7 @@ const Filter = () => {
               name="salarymin"
               className="col-span-3"
               value={filter.salaryMin || ""}
-              onChange={handleSalaryMinChange}
+              onChange={(e) => dispatch(setSalaryMin(parseInt(e.target.value)))}
             />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
@@ -111,7 +88,7 @@ const Filter = () => {
               name="salarymax"
               className="col-span-3"
               value={filter.salaryMax || ""}
-              onChange={handleSalaryMaxChange}
+              onChange={(e) => dispatch(setSalaryMax(parseInt(e.target.value)))}
             />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
@@ -119,7 +96,7 @@ const Filter = () => {
               Employment Type
             </Label>
             <Select
-              onValueChange={handleTypeChange}
+              onValueChange={(t) => dispatch(setEmploymentType(t))}
               className="col-span-3"
               value={filter.type || ""}
             >
@@ -147,20 +124,19 @@ const Filter = () => {
               name="city"
               className="col-span-3"
               value={filter.city || ""}
-              onChange={handleCityChange}
+              onChange={(e) => dispatch(setCity(e.target.value))}
             />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="ho" className="text-right">
               Home Office
             </Label>
-            <Input
-              type="checkbox"
+            <Checkbox
               id="ho"
               name="ho"
-              className="col-span-3"
+              className="ml-5"
               checked={filter.homeOffice}
-              onChange={handleHomeOfficeChange}
+              onCheckedChange={(v) => dispatch(setHomeOffice(v))}
             />
           </div>
         </div>
