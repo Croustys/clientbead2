@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_URL } from '@lib/constants';
 
-const baseQueryWithReauth = async (args, api, extraOptions) => {
+const AuthorizedBaseQuery = async (args, api, extraOptions) => {
   const { auth } = api.getState();
   const token = auth.accessToken;
 
@@ -18,7 +18,6 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
   const result = await baseQuery(args, api, extraOptions);
 
   if (result.error && result.error.status === 401) {
-    // Handle 401 errors if needed
     console.error(result);
   }
 
@@ -27,7 +26,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
 export const api = createApi({
   reducerPath: 'api',
-  baseQuery: baseQueryWithReauth,
+  baseQuery: AuthorizedBaseQuery,
   endpoints: (builder) => ({
     registerUser: builder.mutation({
       query: (user) => ({

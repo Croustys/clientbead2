@@ -1,10 +1,12 @@
-import { useState } from "react";
 import "./App.css";
-import Navbar from "@components/Navbar";
-import { Button } from "@/components/ui/button";
+import Jobs from "@components/Jobs";
 
 function App() {
-  return <></>;
+  return (
+    <>
+      <Jobs />
+    </>
+  );
 }
 
 export default App;

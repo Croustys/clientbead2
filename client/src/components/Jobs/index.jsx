@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import { memo, useState } from "react";
 import { useGetJobsQuery } from "@lib/api";
 import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
@@ -8,7 +8,6 @@ import { getEmploymentType, formatSalary } from "@lib/utils";
 
 const Jobs = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [userId, setUserId] = useState("");
   const [salaryFrom, setSalaryFrom] = useState("");
   const [company, setCompany] = useState("");
 
@@ -16,7 +15,7 @@ const Jobs = () => {
     data: jobsData,
     error,
     isLoading,
-  } = useGetJobsQuery({ userId, salaryFrom, company });
+  } = useGetJobsQuery({ salaryFrom, company });
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -47,12 +46,6 @@ const Jobs = () => {
       </div>
       <div>
         <Input
-          type="text"
-          placeholder="Felhasználó ID"
-          value={userId}
-          onChange={(e) => setUserId(e.target.value)}
-        />
-        <Input
           type="number"
           placeholder="Minimális fizetés"
           value={salaryFrom}
@@ -66,7 +59,6 @@ const Jobs = () => {
         />
         <Button
           onClick={() => {
-            setUserId("");
             setSalaryFrom("");
             setCompany("");
           }}

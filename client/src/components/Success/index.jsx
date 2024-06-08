@@ -8,7 +8,6 @@ const Success = ({ message }) => {
       setVisible(false);
     }, 2000);
 
-    // Cleanup the timer on component unmount
     return () => clearTimeout(timer);
   }, []);
 
