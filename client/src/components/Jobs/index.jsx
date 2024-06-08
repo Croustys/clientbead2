@@ -1,6 +1,9 @@
 import React, { memo, useState } from "react";
 import { useGetJobsQuery } from "@lib/api";
 import { Link } from "react-router-dom";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 
 const Jobs = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -30,34 +33,37 @@ const Jobs = () => {
     <>
       <h1>Böngéssz az állások között:</h1>
       <div>
-        <input
+        <Label htmlFor="search">Search</Label>
+        <Input
           type="text"
-          placeholder="Keresés..."
+          id="search"
+          name="search"
+          placeholder="Search..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button onClick={() => setSearchTerm("")}>Törlés</button>
+        <Button onClick={() => setSearchTerm("")}>Törlés</Button>
       </div>
       <div>
-        <input
+        <Input
           type="text"
           placeholder="Felhasználó ID"
           value={userId}
           onChange={(e) => setUserId(e.target.value)}
         />
-        <input
+        <Input
           type="number"
           placeholder="Minimális fizetés"
           value={salaryFrom}
           onChange={(e) => setSalaryFrom(e.target.value)}
         />
-        <input
+        <Input
           type="text"
           placeholder="Cég"
           value={company}
           onChange={(e) => setCompany(e.target.value)}
         />
-        <button
+        <Button
           onClick={() => {
             setUserId("");
             setSalaryFrom("");
@@ -65,7 +71,7 @@ const Jobs = () => {
           }}
         >
           Törlés
-        </button>
+        </Button>
       </div>
       <table>
         <thead>

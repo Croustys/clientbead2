@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { useLoginUserMutation } from "@lib/api";
 import { useDispatch } from "react-redux";
 import { setAccessToken } from "@store/auth/authSlice";
-import Navbar from "@components/Navbar";
 import { useNavigate } from "react-router-dom";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -47,28 +49,32 @@ const Login = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label>Email:</label>
-        <input
+        <Label htmlFor="email">Email</Label>
+        <Input
           type="email"
           name="email"
+          id="email"
+          placeholder="john@doe.com"
           value={formData.email}
           onChange={handleChange}
           required
         />
       </div>
       <div>
-        <label>Password:</label>
-        <input
+        <Label htmlFor="password">Password</Label>
+        <Input
           type="password"
           name="password"
+          id="password"
+          placeholder="password"
           value={formData.password}
           onChange={handleChange}
           required
         />
       </div>
-      <button type="submit" disabled={isLoading}>
+      <Button type="submit" disabled={isLoading}>
         Login
-      </button>
+      </Button>
       {isError && <p>Login failed. Please try again.</p>}
     </form>
   );

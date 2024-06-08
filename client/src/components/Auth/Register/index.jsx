@@ -6,6 +6,17 @@ import {
 } from "@lib/api";
 import { setAccessToken } from "@store/auth/authSlice";
 import { useDispatch } from "react-redux";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -87,47 +98,62 @@ const Register = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label>Email:</label>
-        <input
+        <Label htmlFor="email">Email</Label>
+        <Input
           type="email"
           name="email"
+          id="email"
+          placeholder="john@doe.com"
           value={formData.email}
           onChange={handleChange}
           required
         />
       </div>
       <div>
-        <label>Password:</label>
-        <input
+        <Label htmlFor="password">Password</Label>
+        <Input
           type="password"
           name="password"
+          id="password"
+          placeholder="password"
           value={formData.password}
           onChange={handleChange}
           required
         />
       </div>
       <div>
-        <label>Full Name:</label>
-        <input
+        <Label htmlFor="fullname">Full Name</Label>
+        <Input
           type="text"
           name="fullname"
+          id="fullname"
+          placeholder="John Doe"
           value={formData.fullname}
           onChange={handleChange}
           required
         />
       </div>
       <div>
-        <label>Role:</label>
-        <select name="role" value={formData.role} onChange={handleChange}>
-          <option value="company">Company</option>
-          <option value="jobseeker">Jobseeker</option>
-        </select>
+        <Label htmlFor="role">Role</Label>
+        <Select
+          defaultValue={formData.role}
+          onValueChange={(t) => setFormData((prev) => ({ ...prev, role: t }))}
+        >
+          <SelectTrigger className="w-[180px]" id="role" name="role">
+            <SelectValue placeholder="Select a role" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="company">Company</SelectItem>
+            <SelectItem value="jobseeker">Jobseeker</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
       {formData.role === "jobseeker" && (
         <div>
-          <label>Previous Work Experiences:</label>
-          <textarea
+          <Label htmlFor="experiences">Previous Work Experiences</Label>
+          <Textarea
             name="experiences"
+            id="experiences"
             value={experiences}
             onChange={handleExperienceChange}
             placeholder="Halo Haven;Front-end fejlesztő;2019-2022&#10;Dunder Mifflin;Full-stack fejlesztő;2022-"
@@ -135,12 +161,12 @@ const Register = () => {
           />
         </div>
       )}
-      <button
+      <Button
         type="submit"
         disabled={isRegistering || isLoggingIn || isAddingExperiences}
       >
         Register
-      </button>
+      </Button>
       {isRegisterSuccess && isLoginSuccess && isAddExperiencesSuccess && (
         <p>Registration successful!</p>
       )}
