@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { memo } from "react";
 import { useSelector } from "react-redux";
 import {
   useGetUserByIdQuery,
   useGetJobsByCompanyQuery,
   useDeleteJobMutation,
+  useGetApplicantsByJobIdQuery,
 } from "@lib/api";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@components/ui/button";
@@ -22,6 +24,14 @@ const CompanyProfile = () => {
     isLoading: isJobsLoading,
   } = useGetJobsByCompanyQuery(userId);
   const [deleteJob] = useDeleteJobMutation();
+  const [selectedJobId, setSelectedJobId] = useState(null);
+  const {
+    data: applicantsData,
+    error: applicantsError,
+    isLoading: isApplicantsLoading,
+  } = useGetApplicantsByJobIdQuery(selectedJobId, {
+    skip: selectedJobId === null,
+  });
 
   if (isUserLoading || isJobsLoading) {
     return <div>Loading...</div>;
@@ -40,7 +50,7 @@ const CompanyProfile = () => {
   };
 
   const handleViewClick = (jobId) => {
-    navigate(`/jobs/${jobId}`);
+    setSelectedJobId(jobId);
   };
 
   const handleAddJobClick = () => {
@@ -85,11 +95,39 @@ const CompanyProfile = () => {
             </div>
             <div>
               <Button onClick={() => handleViewClick(job.id)}>View</Button>
+              <Button onClick={() => navigate(`/jobs/edit/${job.id}`)}>
+                Edit
+              </Button>
               <Button onClick={() => handleDeleteClick(job.id)}>Delete</Button>
             </div>
           </li>
         ))}
       </ul>
+
+      {selectedJobId && (
+        <div>
+          <h3 className="mt-5 mb-2">Applicants for Job ID: {selectedJobId}</h3>
+          {isApplicantsLoading ? (
+            <div>Loading applicants...</div>
+          ) : applicantsError ? (
+            <div>Error fetching applicants: {applicantsError.message}</div>
+          ) : (
+            <ul>
+              {applicantsData?.map((applicant) => (
+                <li
+                  key={applicant.userId}
+                  className="mb-4 p-4 bg-slate-100 flex justify-between items-center"
+                >
+                  <div>
+                    <strong>{applicant.user.fullname}</strong>
+                    <p>{applicant.user.email}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
     </div>
   );
 };

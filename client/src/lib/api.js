@@ -92,6 +92,9 @@ export const api = createApi({
         method: 'DELETE',
       }),
     }),
+    getApplicantsByJobId: builder.query({
+      query: (jobId) => `/applicants?jobId=${jobId}`,
+    }),
   }),
 });
 
@@ -107,5 +110,6 @@ export const {
   useUpdateExperienceMutation,
   useCreateJobMutation,
   useGetJobsByCompanyQuery,
-  useDeleteJobMutation
+  useDeleteJobMutation,
+  useGetApplicantsByJobIdQuery
 } = api;
