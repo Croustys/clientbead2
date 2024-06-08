@@ -17,8 +17,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -87,6 +89,7 @@ const Register = () => {
         });
         await addExperiences(experiencesArray).unwrap();
       }
+      navigate("/");
     } catch (error) {
       console.error(
         "Failed to register user, login, or add experiences:",

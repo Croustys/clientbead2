@@ -22,6 +22,7 @@ const JobseekerProfile = () => {
     data: experiencesData,
     error: experiencesError,
     isLoading: isExperiencesLoading,
+    refetch: refetchExperiencesData
   } = useGetExperiencesQuery(undefined, { refetchOnMountOrArgChange: 2 });
   const [updateExperience] = useUpdateExperienceMutation();
   const [editingExperience, setEditingExperience] = useState(null);
@@ -69,6 +70,7 @@ const JobseekerProfile = () => {
   const handleSaveClick = async () => {
     await updateExperience({ id: editingExperience, ...experienceForm });
     setEditingExperience(null);
+    refetchExperiencesData();
   };
 
   return (
@@ -120,11 +122,14 @@ const JobseekerProfile = () => {
                   className="mb-2"
                 />
                 <Button onClick={handleSaveClick}>Save</Button>
+                <Button onClick={() => setEditingExperience(null)}>
+                  Cancel
+                </Button>
               </div>
             ) : (
               <div className="p-4 bg-slate-100 flex justify-between">
                 <div>
-                  <strong>{exp.title}</strong> at {exp.company} ({exp.interval})
+                  ({exp.interval}) <strong>{exp.title}</strong> at {exp.company}
                 </div>
                 <Button onClick={() => handleEditClick(exp)}>Edit</Button>
               </div>

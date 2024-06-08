@@ -22,6 +22,7 @@ const CompanyProfile = () => {
     data: jobsData,
     error: jobsError,
     isLoading: isJobsLoading,
+    refetch: refetchJobsData,
   } = useGetJobsByCompanyQuery(userId);
   const [deleteJob] = useDeleteJobMutation();
   const [selectedJobId, setSelectedJobId] = useState(null);
@@ -47,6 +48,7 @@ const CompanyProfile = () => {
 
   const handleDeleteClick = async (jobId) => {
     await deleteJob(jobId);
+    refetchJobsData();
   };
 
   const handleViewClick = (jobId) => {
@@ -103,7 +105,7 @@ const CompanyProfile = () => {
 
       {selectedJobId && (
         <div>
-          <h3 className="mt-5 mb-2">Applicants for Job ID: {selectedJobId}</h3>
+          <h3 className="mt-5 mb-2">Applicants for the selected job:</h3>
           {isApplicantsLoading ? (
             <div>Loading applicants...</div>
           ) : applicantsError ? (
